@@ -5,10 +5,14 @@ import { Scene, PerspectiveCamera, WebGL1Renderer, Mesh, Light, PointLightHelper
 import { StarShape } from './../../threed/shapes/star.shape';
 import { TorusShape } from './../../threed/shapes/torus.shape';
 import { BoxPictureShape } from './../../threed/shapes/boxPicture.shape';
+import { MoonShape } from './../../threed/shapes/moon.shape';
 
 // Lights
 import { FloodLight } from './../../threed/lights/flood.light';
 import { APointLight } from './../../threed/lights/point.light';
+
+// Animations
+import { cameraMoveOnScroll } from './../../threed/animations/cameraMove.animation';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +44,10 @@ export class SpaceSceneService {
     const pictureBox = new BoxPictureShape('assets/profile/eliav.jpg');
     this.addObject(pictureBox.box);
 
+    // Moon
+    const moon = new MoonShape();
+    this.addObject(moon.moon);
+
     // Background
     this.setBackground('assets/sky/space2.jpg');
   }
@@ -62,7 +70,7 @@ export class SpaceSceneService {
     this.camera = new PerspectiveCamera(75, this._windowRatio, 0.1, 1000);
     
     // Handle window resizing
-    window.addEventListener('resize', this._resizeScene, false);
+    window.addEventListener('resize', () => { this._resizeScene(); }, false);
 
     // Rendering
     this.renderer = new WebGL1Renderer({
@@ -78,6 +86,11 @@ export class SpaceSceneService {
 
     // Start drawing
     this.draw();
+
+    // Move Camera On Scroll
+    addEventListener('scroll', () => {
+      cameraMoveOnScroll(this.camera);
+    });
   }
 
   private _resizeScene(): void {

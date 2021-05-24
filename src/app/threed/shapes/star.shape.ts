@@ -1,5 +1,4 @@
 import { Mesh, MeshStandardMaterial, SphereGeometry } from 'three';
-
 export class StarShape {
 	private _star: Mesh = new Mesh();
 	get star(): Mesh { return this._star; }
@@ -15,7 +14,6 @@ export class StarShape {
     }
     const [x, y] = Array(2).fill(0).map(() => { return generateDistance(maxDist); });
     const z = generateDistance(maxDist, minDist);
-    console.log(x, y, z);
 		this._star.position.set(x, y, z);
 	}
 }

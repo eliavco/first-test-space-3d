@@ -8,7 +8,7 @@ export class TorusShape {
 	intervals: number[] = [];
 
 	constructor() {
-		const geometry = new TorusGeometry(10, 3, 16, 100);
+		const geometry = new TorusGeometry(10, 2, 16, 100);
 		const material = new MeshStandardMaterial({ color: 0xFF3467 });
 		this._torus = new Mesh(geometry, material);
 		
