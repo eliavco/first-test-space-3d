@@ -1,8 +1,10 @@
 import { ElementRef, Injectable } from '@angular/core';
-import { Scene, PerspectiveCamera, WebGL1Renderer, Mesh, Light, PointLightHelper } from 'three';
+import { Scene, PerspectiveCamera, WebGL1Renderer, Mesh, Light, PointLightHelper, TextureLoader } from 'three';
 
 // Shapes
+import { StarShape } from './../../threed/shapes/star.shape';
 import { TorusShape } from './../../threed/shapes/torus.shape';
+import { BoxPictureShape } from './../../threed/shapes/boxPicture.shape';
 
 // Lights
 import { FloodLight } from './../../threed/lights/flood.light';
@@ -19,14 +21,32 @@ export class SpaceSceneService {
   constructor() { }
 
   draw(): void {
+
+    // donut
     const torus = new TorusShape();
     this.addObject(torus.torus);
 
+	  // lights
     const bulb = new APointLight();
     this.addObject(bulb.light);
 
     const flood = new FloodLight();
-    this.addObject(flood.light);
+	  this.addObject(flood.light);
+	  
+	  // stars
+    Array(4000).fill(0).map(() => new StarShape()).forEach(star => { this.addObject(star.star); });
+
+    // Picture Box
+    const pictureBox = new BoxPictureShape('assets/profile/eliav.jpg');
+    this.addObject(pictureBox.box);
+
+    // Background
+    this.setBackground('assets/sky/space2.jpg');
+  }
+
+  setBackground(location: string): void {
+    const bgTexture = new TextureLoader().load(location);
+    this.scene.background = bgTexture;
   }
 
   addObject(object: Mesh | Light | PointLightHelper): void {
