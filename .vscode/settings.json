@@ -1,0 +1,13 @@
+{
+  "files.exclude": {
+    ".vscode": true,
+    "node_modules": true,
+    ".browserslistrc": true,
+    "tsconfig.app.json": true,
+    "tsconfig.json": true,
+    "tsconfig.spec.json": true,
+    "README.md": true,
+    "package-lock.json": true,
+    "karma.conf.js": true
+  }
+}
